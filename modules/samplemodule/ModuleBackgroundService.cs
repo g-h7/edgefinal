@@ -66,7 +66,7 @@ internal class ModuleBackgroundService : BackgroundService
                 {
                     temperatura = temperature,
                     humidit = humidity,
-                    fireD = fireDetected.ToString()
+                    fireD = fireDetected ? 0 : 1
                 };
                 var messageStringNEW = JsonConvert.SerializeObject(telemetryDataPoint);
                 var messageNEW = new Message(Encoding.ASCII.GetBytes(messageStringNEW));
