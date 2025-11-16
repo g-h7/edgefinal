@@ -8,6 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = samplemodule
-build_property.ProjectDir = C:\Users\game\Desktop\issmodulo\edgesolution\modules\samplemodule\
+build_property.ProjectDir = C:\Users\game\Desktop\edgefinal\modules\samplemodule\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 

@@ -63,7 +63,7 @@
             "status": "running",
             "restartPolicy": "always",
             "settings": {
-              "image": "myacrfordemosfranciacontainerregistro.azurecr.io//samplemodule:0.0.1-amd64",
+              "image": "myacrfordemosfranciacontainerregistroproyecto.azurecr.io/samplemodule:3.0.0-amd64",
               "createOptions": {}
             }
           },
@@ -73,7 +73,7 @@
             "status": "running",
             "restartPolicy": "always",
             "settings": {
-              "image": "mcr.microsoft.com/azureiotedge-simulated-temperature-sensor:latest",
+              "image": "mcr.microsoft.com/azureiotedge-simulated-temperature-sensor:1.4",
               "createOptions": {}
             }
           }

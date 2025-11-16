@@ -40,17 +40,20 @@ internal class ModuleBackgroundService : BackgroundService
 
         byte[] messageBytes = message.GetBytes();
         string messageString = Encoding.UTF8.GetString(messageBytes);
+        
+        //var messageString = JsonConvert.SerializeObject(telemetryDataPoint);
+        //var new_message = new Message(Encoding.ASCII.GetBytes(messageString));
         _logger.LogInformation("Received message: {counterValue}, Body: [{messageString}]", counterValue, messageString);
 
         if (!string.IsNullOrEmpty(messageString))
         {
+            _logger.LogInformation("THIS IS SHIT FIRE");
             try{
-                _logger.LogInformation("THIS IS SHIT");
                 // Parse JSON payload
                 var json = JsonDocument.Parse(messageString).RootElement;
-                var amb = json.GetProperty("ambient")
-                double temperature = amb.GetProperty("temperature").GetDouble();
-                double humidity = amb.GetProperty("humidity").GetDouble();
+                var ambiente = json.GetProperty("ambient");
+                double temperature = ambiente.GetProperty("temperature").GetDouble();
+                double humidity = ambiente.GetProperty("humidity").GetDouble();
 
                 // Simple fire detection logic (example thresholds)
                 bool fireDetected = temperature > 60 && humidity < 30;
@@ -58,18 +61,17 @@ internal class ModuleBackgroundService : BackgroundService
                 _logger.LogInformation("Temperature: {temperature}, Humidity: {humidity}, FireDetected: {fireDetected}",
                     temperature, humidity, fireDetected);
 
-                _logger.LogInformation("THIS IS SHIT FIRE");
                 // Create new message with properties
                 using Message pipeMessage = new(messageBytes);
                 foreach (KeyValuePair<string, string> prop in message.Properties)
                 {
                     pipeMessage.Properties.Add(prop.Key, prop.Value);
-                    // Add fire detection result as a property
-                    pipeMessage.Properties.Add("fireDetected", fireDetected.ToString());
                 }
-
+                // Add fire detection result as a property
+                pipeMessage.Properties.Add("fireDetected", fireDetected.ToString());
+                
                 await _moduleClient!.SendEventAsync("output1", pipeMessage, _cancellationToken);
-                _logger.LogInformation("THIS IS SHIT finish");
+                _logger.LogInformation("SHIT SEND");
                 _logger.LogInformation("Processed message sent with fire detection result");
             }
             catch (Exception ex)

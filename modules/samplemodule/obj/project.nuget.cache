@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "+20PjSkG1yM=",
+  "dgSpecHash": "Jdp6n6ZJtjo=",
   "success": true,
-  "projectFilePath": "C:\\Users\\game\\Desktop\\issmodulo\\edgesolution\\modules\\samplemodule\\samplemodule.csproj",
+  "projectFilePath": "C:\\Users\\game\\Desktop\\edgefinal\\modules\\samplemodule\\samplemodule.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\game\\.nuget\\packages\\dotnetty.buffers\\0.7.0\\dotnetty.buffers.0.7.0.nupkg.sha512",
     "C:\\Users\\game\\.nuget\\packages\\dotnetty.codecs\\0.7.0\\dotnetty.codecs.0.7.0.nupkg.sha512",
