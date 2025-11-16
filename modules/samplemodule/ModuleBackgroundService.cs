@@ -2,6 +2,9 @@
 using Microsoft.Azure.Devices.Client.Transport.Mqtt;
 using System.Text;
 using System.Text.Json;
+using System;
+using Newtonsoft.Json;
+using System.Threading.Tasks;
 namespace samplemodule;
 
 internal class ModuleBackgroundService : BackgroundService
@@ -58,6 +61,16 @@ internal class ModuleBackgroundService : BackgroundService
                 // Simple fire detection logic (example thresholds)
                 bool fireDetected = temperature > 60 && humidity < 30;
 
+                // Create JSON message
+                var telemetryDataPoint = new
+                {
+                    temperatura = temperature,
+                    humidit = humidity,
+                    fireD = fireDetected.ToString()
+                };
+                var messageStringNEW = JsonConvert.SerializeObject(telemetryDataPoint);
+                var messageNEW = new Message(Encoding.ASCII.GetBytes(messageStringNEW));
+
                 _logger.LogInformation("Temperature: {temperature}, Humidity: {humidity}, FireDetected: {fireDetected}",
                     temperature, humidity, fireDetected);
 
@@ -66,11 +79,22 @@ internal class ModuleBackgroundService : BackgroundService
                 foreach (KeyValuePair<string, string> prop in message.Properties)
                 {
                     pipeMessage.Properties.Add(prop.Key, prop.Value);
+
                 }
                 // Add fire detection result as a property
                 pipeMessage.Properties.Add("fireDetected", fireDetected.ToString());
+
+
+
+
+                //await _moduleClient!.SendEventAsync("output1", pipeMessage, _cancellationToken);
                 
-                await _moduleClient!.SendEventAsync("output1", pipeMessage, _cancellationToken);
+                await _moduleClient!.SendEventAsync("output1", messageNEW, _cancellationToken);
+                _logger.LogInformation("THE INFO PERSONAL");
+                // _logger.LogInformation(message);
+
+                _logger.LogInformation("THE INFO F, NO PUEDO CONVERTIR A STRING Microsoft.Azure.Devices.Client.Message");
+                //_logger.LogInformation(pipeMessage);
                 _logger.LogInformation("SHIT SEND");
                 _logger.LogInformation("Processed message sent with fire detection result");
             }
